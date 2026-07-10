@@ -26,7 +26,7 @@ var PAGES = {
    Este usuario siempre funciona sin necesidad de internet.
    Cambia el usuario y la contraseña aquí. */
 var ADMIN_USER = {
-  usuario:  "admin",
+  usuario:  "andres",
   pass:     "adminAndres*",
   nombre:   "Administrador",
   cargo:    "Admin",
