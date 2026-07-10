@@ -13,13 +13,13 @@
    Puedes agregar más páginas si las necesitas. */
 var PAGES = {
   "INVENTARIO":
-    "https://app.powerbi.com/view?r=eyJrIjoiMDljNTU2NDgtYzJjMC00NDEwLTgwMTgtMTIyNjAxOTVhYjVkIiwidCI6Ijg0YTRmNDEzLTE2ZjYtNDQ0MC04NTFkLTIxMzQxZjhkYzc3ZSIsImMiOjR9",
+    "https://app.powerbi.com/view?r=eyJrIjoiMmFkNzI2MmYtOTI0ZS00NTFlLTkyODUtOGMxNGNkN2RiMDRlIiwidCI6Ijg0YTRmNDEzLTE2ZjYtNDQ0MC04NTFkLTIxMzQxZjhkYzc3ZSIsImMiOjR9",
 
   "ANALISIS VENTAS 2":
-    "https://app.powerbi.com/view?r=eyJrIjoiMDljNTU2NDgtYzJjMC00NDEwLTgwMTgtMTIyNjAxOTVhYjVkIiwidCI6Ijg0YTRmNDEzLTE2ZjYtNDQ0MC04NTFkLTIxMzQxZjhkYzc3ZSIsImMiOjR9",
+    "https://app.powerbi.com/view?r=eyJrIjoiY2Y3NDUzZmYtM2FjNi00YTI0LTk1MDUtM2ViMDFkNjdiZThhIiwidCI6Ijg0YTRmNDEzLTE2ZjYtNDQ0MC04NTFkLTIxMzQxZjhkYzc3ZSIsImMiOjR9",
 
   "ANALISIS SOBRESTOCK":
-    "https://app.powerbi.com/groups/me/reports/c9144773-aad6-46d8-8962-d8254b397a19/2ea691cd79bc22fbf42f?experience=power-bi"
+    "https://app.powerbi.com/view?r=eyJrIjoiY2EzYzBmOGYtZjVhOS00Y2MwLWFlODktMGEyZGJjMGE5OGZkIiwidCI6Ijg0YTRmNDEzLTE2ZjYtNDQ0MC04NTFkLTIxMzQxZjhkYzc3ZSIsImMiOjR9"
 };
 
 /* ---- 2. USUARIO ADMINISTRADOR ----
