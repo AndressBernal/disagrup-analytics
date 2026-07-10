@@ -13,7 +13,7 @@
    Puedes agregar más páginas si las necesitas. */
 var PAGES = {
   "INVENTARIO":
-    "https://app.powerbi.com/groups/me/reports/c9144773-aad6-46d8-8962-d8254b397a19/bd259f82117416ba7c82?experience=power-bi",
+    "https://app.powerbi.com/view?r=eyJrIjoiMDljNTU2NDgtYzJjMC00NDEwLTgwMTgtMTIyNjAxOTVhYjVkIiwidCI6Ijg0YTRmNDEzLTE2ZjYtNDQ0MC04NTFkLTIxMzQxZjhkYzc3ZSIsImMiOjR9",
 
   "ANALISIS VENTAS 2":
     "https://app.powerbi.com/view?r=eyJrIjoiMDljNTU2NDgtYzJjMC00NDEwLTgwMTgtMTIyNjAxOTVhYjVkIiwidCI6Ijg0YTRmNDEzLTE2ZjYtNDQ0MC04NTFkLTIxMzQxZjhkYzc3ZSIsImMiOjR9",
