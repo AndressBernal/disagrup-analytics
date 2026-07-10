@@ -64,8 +64,8 @@ body {
 
 .logo-icon {
   /* Contenedor del ícono/logo */
-  width: 64px;
-  height: 64px;
+  width: 90px;
+  height: 90px;
   background: var(--color-primary-bg);
   border-radius: 16px;
   display: flex;
