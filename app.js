@@ -27,7 +27,7 @@ var PAGES = {
    Cambia el usuario y la contraseña aquí. */
 var ADMIN_USER = {
   usuario:  "admin",
-  pass:     "admin123",
+  pass:     "adminAndres*",
   nombre:   "Administrador",
   cargo:    "Admin",
   paginas:  ["INVENTARIO", "ANALISIS VENTAS 2", "ANALISIS SOBRESTOCK"],
