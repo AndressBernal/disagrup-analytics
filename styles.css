@@ -1,0 +1,506 @@
+/* =============================================
+   DISAGRUP ANALYTICS — ESTILOS
+   Modifica este archivo para cambiar colores,
+   fuentes, logo y diseño general
+   ============================================= */
+
+/* ---- COLORES PRINCIPALES ---- */
+/* Cambia estos valores para personalizar la marca */
+:root {
+  --color-primary:      #185FA5;   /* Azul principal — botones, links, tabs activos */
+  --color-primary-dark: #0C447C;   /* Azul oscuro — hover de botones */
+  --color-primary-bg:   #EBF3FB;   /* Azul claro — fondos de badges, chips */
+  --color-success:      #1D9E75;   /* Verde — botón guardar, badge logística */
+  --color-success-bg:   #E4F5EC;   /* Verde claro — fondo badge logística */
+  --color-danger:       #d63031;   /* Rojo — errores, eliminar */
+  --color-danger-bg:    #fff5f5;   /* Rojo claro — hover eliminar */
+  --color-admin-bg:     #F0EEFE;   /* Morado claro — badge admin */
+  --color-admin:        #534AB7;   /* Morado — texto badge admin */
+  --color-text:         #1a1a1a;   /* Texto principal */
+  --color-text-muted:   #555;      /* Texto secundario */
+  --color-text-light:   #888;      /* Texto terciario */
+  --color-border:       #e0e0e0;   /* Bordes inputs */
+  --color-border-light: #eee;      /* Bordes cards */
+  --color-bg:           #f4f4f0;   /* Fondo general */
+  --color-white:        #ffffff;   /* Fondo cards */
+}
+
+/* ---- RESET Y BASE ---- */
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  background: var(--color-bg);
+  min-height: 100vh;
+  color: var(--color-text);
+}
+
+/* =============================================
+   PANTALLA DE LOGIN
+   ============================================= */
+#screen-login {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  background: var(--color-bg);
+}
+
+.login-box {
+  background: var(--color-white);
+  border-radius: 16px;
+  padding: 2.5rem 2rem;
+  width: 100%;
+  max-width: 400px;
+  box-shadow: 0 4px 24px rgba(0,0,0,0.08);
+}
+
+/* ---- LOGO ---- */
+/* Para cambiar el logo, modifica el contenido del div .logo-container en index.html */
+/* Puedes usar: un emoji, texto, o una imagen <img src="logo.png"> */
+.logo-container {
+  text-align: center;
+  margin-bottom: 1rem;
+}
+
+.logo-icon {
+  /* Contenedor del ícono/logo */
+  width: 64px;
+  height: 64px;
+  background: var(--color-primary-bg);
+  border-radius: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 12px;
+  font-size: 32px;
+  /* Para imagen: elimina font-size y agrega padding */
+}
+
+.logo-icon img {
+  /* Si usas una imagen como logo */
+  width: 44px;
+  height: 44px;
+  object-fit: contain;
+}
+
+.login-title {
+  font-size: 20px;
+  font-weight: 600;
+  color: var(--color-text);
+  text-align: center;
+  margin-bottom: 4px;
+}
+
+.login-sub {
+  font-size: 13px;
+  color: var(--color-text-light);
+  text-align: center;
+  margin-bottom: 1.8rem;
+}
+
+/* ---- CAMPOS DEL FORMULARIO ---- */
+.field { margin-bottom: 14px; }
+
+.field label {
+  display: block;
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--color-text-muted);
+  margin-bottom: 5px;
+}
+
+.field input {
+  width: 100%;
+  padding: 11px 12px;
+  border: 1.5px solid var(--color-border);
+  border-radius: 8px;
+  font-size: 14px;
+  outline: none;
+  transition: border 0.2s;
+  background: #fafafa;
+}
+
+.field input:focus {
+  border-color: var(--color-primary);
+  background: var(--color-white);
+}
+
+/* ---- BOTÓN PRINCIPAL ---- */
+.btn-primary {
+  width: 100%;
+  padding: 12px;
+  background: var(--color-primary);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  margin-top: 6px;
+  transition: background 0.2s;
+}
+
+.btn-primary:hover { background: var(--color-primary-dark); }
+.btn-primary:disabled { background: #aaa; cursor: not-allowed; }
+
+/* ---- MENSAJES ---- */
+.error-msg {
+  color: var(--color-danger);
+  font-size: 13px;
+  margin-top: 10px;
+  text-align: center;
+  display: none;
+  padding: 8px;
+  background: var(--color-danger-bg);
+  border-radius: 6px;
+}
+
+.loading-msg {
+  color: var(--color-primary);
+  font-size: 13px;
+  margin-top: 10px;
+  text-align: center;
+  display: none;
+}
+
+.login-footer {
+  text-align: center;
+  font-size: 11px;
+  color: #bbb;
+  margin-top: 1.5rem;
+}
+
+/* =============================================
+   BARRA SUPERIOR (TOPBAR)
+   ============================================= */
+.topbar {
+  background: var(--color-white);
+  padding: 12px 24px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid var(--color-border-light);
+  box-shadow: 0 1px 4px rgba(0,0,0,0.04);
+  flex-shrink: 0;
+}
+
+.topbar-brand {
+  font-size: 17px;
+  font-weight: 700;
+  color: var(--color-primary);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+/* Logo pequeño en topbar */
+.topbar-logo-icon {
+  width: 28px;
+  height: 28px;
+  background: var(--color-primary-bg);
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+}
+
+.topbar-logo-icon img {
+  width: 18px;
+  height: 18px;
+  object-fit: contain;
+}
+
+.topbar-user { font-size: 13px; color: var(--color-text-muted); }
+
+.btn-logout {
+  padding: 7px 16px;
+  background: none;
+  border: 1.5px solid var(--color-border);
+  border-radius: 8px;
+  font-size: 13px;
+  color: var(--color-text-muted);
+  cursor: pointer;
+}
+.btn-logout:hover { background: var(--color-bg); }
+
+/* ---- BADGES DE CARGO ---- */
+.topbar-badge {
+  display: inline-block;
+  padding: 2px 10px;
+  border-radius: 20px;
+  font-size: 11px;
+  font-weight: 500;
+  margin-left: 6px;
+}
+.badge-mkt { background: var(--color-primary-bg); color: var(--color-primary); }
+.badge-log { background: var(--color-success-bg); color: var(--color-success); }
+.badge-adm { background: var(--color-admin-bg); color: var(--color-admin); }
+.badge-other { background: #f0f0f0; color: #555; }
+
+/* =============================================
+   VISOR DE POWER BI
+   ============================================= */
+#screen-pbi {
+  display: none;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.page-tabs {
+  background: var(--color-white);
+  border-bottom: 1px solid var(--color-border-light);
+  padding: 0 24px;
+  display: flex;
+  flex-shrink: 0;
+}
+
+.page-tab {
+  padding: 14px 20px;
+  font-size: 13px;
+  color: var(--color-text-light);
+  cursor: pointer;
+  border-bottom: 3px solid transparent;
+  font-weight: 500;
+  transition: all 0.2s;
+}
+
+.page-tab:hover { color: var(--color-primary); }
+.page-tab.active { color: var(--color-primary); border-bottom-color: var(--color-primary); }
+
+.pbi-frame {
+  width: 100%;
+  height: calc(100vh - 100px);
+  border: none;
+  display: block;
+}
+
+.no-url-msg {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex: 1;
+  flex-direction: column;
+  gap: 8px;
+  padding: 2rem;
+  text-align: center;
+  color: #aaa;
+  min-height: 300px;
+}
+
+/* =============================================
+   PANEL DE ADMINISTRADOR
+   ============================================= */
+#screen-admin {
+  display: none;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.admin-content {
+  padding: 24px;
+  max-width: 960px;
+  margin: 0 auto;
+  width: 100%;
+}
+
+.admin-title {
+  font-size: 20px;
+  font-weight: 600;
+  color: var(--color-text);
+  margin-bottom: 20px;
+}
+
+/* ---- TABS ADMIN ---- */
+.tabs {
+  display: inline-flex;
+  gap: 4px;
+  background: var(--color-white);
+  border: 1px solid var(--color-border-light);
+  border-radius: 10px;
+  padding: 4px;
+  margin-bottom: 20px;
+}
+
+.tab-btn {
+  padding: 8px 18px;
+  border: none;
+  background: none;
+  border-radius: 7px;
+  font-size: 13px;
+  color: var(--color-text-light);
+  cursor: pointer;
+  font-weight: 500;
+  transition: all 0.2s;
+}
+.tab-btn.active { background: var(--color-primary); color: white; }
+
+/* ---- CARDS ---- */
+.card {
+  background: var(--color-white);
+  border-radius: 12px;
+  border: 1px solid var(--color-border-light);
+  padding: 1.5rem;
+  margin-bottom: 16px;
+}
+
+.card-title {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--color-text);
+  margin-bottom: 4px;
+}
+
+.card-sub {
+  font-size: 12px;
+  color: var(--color-text-light);
+  margin-bottom: 16px;
+}
+
+/* ---- LISTA DE USUARIOS ---- */
+.user-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 0;
+  border-bottom: 1px solid #f4f4f0;
+}
+.user-row:last-child { border-bottom: none; }
+
+.user-name { font-size: 14px; font-weight: 500; color: var(--color-text); }
+.user-uname { font-size: 12px; color: var(--color-text-light); margin-top: 2px; }
+
+.page-chip {
+  display: inline-block;
+  padding: 3px 10px;
+  background: var(--color-primary-bg);
+  color: var(--color-primary);
+  border-radius: 20px;
+  font-size: 11px;
+  margin: 2px;
+}
+
+/* ---- INFO DEL SHEET ---- */
+.sync-info {
+  font-size: 12px;
+  color: var(--color-text-light);
+  margin-bottom: 16px;
+  background: #f9f9f7;
+  padding: 10px 14px;
+  border-radius: 8px;
+  line-height: 1.7;
+}
+.sync-info a { color: var(--color-primary); text-decoration: none; }
+.sync-info a:hover { text-decoration: underline; }
+
+/* ---- BOTONES ADMIN ---- */
+.btn-sync {
+  padding: 8px 16px;
+  background: var(--color-success);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 13px;
+  cursor: pointer;
+  margin-bottom: 12px;
+}
+.btn-sync:hover { background: #0F6E56; }
+
+.btn-add {
+  padding: 10px 24px;
+  background: var(--color-primary);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+}
+.btn-add:hover { background: var(--color-primary-dark); }
+
+.btn-del {
+  padding: 6px 12px;
+  border: 1.5px solid #ffcdd2;
+  border-radius: 8px;
+  color: var(--color-danger);
+  font-size: 12px;
+  cursor: pointer;
+  background: none;
+  white-space: nowrap;
+}
+.btn-del:hover { background: var(--color-danger-bg); }
+
+/* ---- FORMULARIO AGREGAR USUARIO ---- */
+.form-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+.form-grid label {
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--color-text-muted);
+  display: block;
+  margin-bottom: 5px;
+}
+
+.form-grid input,
+.form-grid select {
+  width: 100%;
+  padding: 9px 12px;
+  border: 1.5px solid var(--color-border);
+  border-radius: 8px;
+  font-size: 13px;
+  outline: none;
+}
+
+.form-grid input:focus,
+.form-grid select:focus { border-color: var(--color-primary); }
+
+.pages-title {
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--color-text);
+  margin-bottom: 10px;
+}
+
+.pages-checks { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 16px; }
+
+.chk-label {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  padding: 8px 14px;
+  border: 1.5px solid var(--color-border);
+  border-radius: 8px;
+  font-size: 13px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.chk-label:hover { border-color: var(--color-primary); }
+.chk-label.checked {
+  background: var(--color-primary-bg);
+  border-color: var(--color-primary);
+  color: var(--color-primary);
+}
+
+.form-err {
+  color: var(--color-danger);
+  font-size: 12px;
+  margin-bottom: 10px;
+  display: none;
+}
+
+/* =============================================
+   RESPONSIVE — MÓVIL
+   ============================================= */
+@media (max-width: 600px) {
+  .login-box { padding: 2rem 1.5rem; margin: 1rem; }
+  .form-grid { grid-template-columns: 1fr; }
+  .topbar { padding: 10px 16px; }
+  .topbar-brand span.brand-name { display: none; }
+  .admin-content { padding: 16px; }
+  .page-tab { padding: 12px 14px; font-size: 12px; }
+}
