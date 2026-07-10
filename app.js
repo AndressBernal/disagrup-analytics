@@ -16,7 +16,7 @@ var PAGES = {
     "https://app.powerbi.com/groups/me/reports/c9144773-aad6-46d8-8962-d8254b397a19/bd259f82117416ba7c82?experience=power-bi",
 
   "ANALISIS VENTAS 2":
-    "https://app.powerbi.com/groups/me/reports/c9144773-aad6-46d8-8962-d8254b397a19/37dc7e5f74c4e0100b20?experience=power-bi",
+    "https://app.powerbi.com/view?r=eyJrIjoiMDljNTU2NDgtYzJjMC00NDEwLTgwMTgtMTIyNjAxOTVhYjVkIiwidCI6Ijg0YTRmNDEzLTE2ZjYtNDQ0MC04NTFkLTIxMzQxZjhkYzc3ZSIsImMiOjR9",
 
   "ANALISIS SOBRESTOCK":
     "https://app.powerbi.com/groups/me/reports/c9144773-aad6-46d8-8962-d8254b397a19/2ea691cd79bc22fbf42f?experience=power-bi"
