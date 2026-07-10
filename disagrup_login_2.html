@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Disagrup Analytics — Acceso</title>
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #f4f4f0; min-height: 100vh; }
+
+/* LOGIN */
+#screen-login { display: flex; align-items: center; justify-content: center; min-height: 100vh; }
+#screen-pbi, #screen-admin { display: none; flex-direction: column; min-height: 100vh; }
+
+.login-box { background: white; border-radius: 16px; padding: 2.5rem 2rem; width: 100%; max-width: 400px; box-shadow: 0 4px 24px rgba(0,0,0,0.08); }
+.logo { width: 56px; height: 56px; background: #EBF3FB; border-radius: 14px; display: flex; align-items: center; justify-content: center; margin: 0 auto 1rem; font-size: 28px; }
+.login-title { text-align: center; font-size: 20px; font-weight: 600; color: #1a1a1a; margin-bottom: 4px; }
+.login-sub { text-align: center; font-size: 13px; color: #888; margin-bottom: 1.8rem; }
+.field { margin-bottom: 14px; }
+.field label { display: block; font-size: 12px; font-weight: 500; color: #555; margin-bottom: 5px; }
+.field input { width: 100%; padding: 11px 12px; border: 1.5px solid #e0e0e0; border-radius: 8px; font-size: 14px; outline: none; transition: border 0.2s; background: #fafafa; }
+.field input:focus { border-color: #185FA5; background: white; }
+.btn-primary { width: 100%; padding: 12px; background: #185FA5; color: white; border: none; border-radius: 8px; font-size: 14px; font-weight: 500; cursor: pointer; margin-top: 6px; transition: background 0.2s; }
+.btn-primary:hover { background: #0C447C; }
+.btn-primary:disabled { background: #aaa; cursor: not-allowed; }
+.error-msg { color: #d63031; font-size: 13px; margin-top: 10px; text-align: center; display: none; padding: 8px; background: #fff5f5; border-radius: 6px; }
+.loading-msg { color: #185FA5; font-size: 13px; margin-top: 10px; text-align: center; display: none; }
+.login-footer { text-align: center; font-size: 11px; color: #bbb; margin-top: 1.5rem; }
+
+/* TOPBAR */
+.topbar { background: white; padding: 12px 24px; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #eee; flex-shrink: 0; box-shadow: 0 1px 4px rgba(0,0,0,0.04); }
+.topbar-brand { font-size: 17px; font-weight: 700; color: #185FA5; display: flex; align-items: center; gap: 8px; }
+.topbar-user { font-size: 13px; color: #555; }
+.topbar-badge { display: inline-block; padding: 2px 10px; border-radius: 20px; font-size: 11px; font-weight: 500; margin-left: 6px; }
+.badge-mkt { background: #EBF3FB; color: #185FA5; }
+.badge-log { background: #E4F5EC; color: #0F6E56; }
+.badge-adm { background: #F0EEFE; color: #534AB7; }
+.btn-logout { padding: 7px 16px; background: none; border: 1.5px solid #ddd; border-radius: 8px; font-size: 13px; color: #555; cursor: pointer; }
+.btn-logout:hover { background: #f4f4f0; }
+
+/* PBI */
+.page-tabs { background: white; border-bottom: 1px solid #eee; padding: 0 24px; display: flex; }
+.page-tab { padding: 14px 20px; font-size: 13px; color: #888; cursor: pointer; border-bottom: 3px solid transparent; font-weight: 500; transition: all 0.2s; }
+.page-tab:hover { color: #185FA5; }
+.page-tab.active { color: #185FA5; border-bottom-color: #185FA5; }
+.pbi-frame { width: 100%; height: calc(100vh - 100px); border: none; display: block; }
+.no-url { display: flex; align-items: center; justify-content: center; flex: 1; color: #aaa; flex-direction: column; gap: 8px; padding: 2rem; text-align: center; }
+
+/* ADMIN */
+.admin-content { padding: 24px; max-width: 960px; margin: 0 auto; }
+.admin-title { font-size: 20px; font-weight: 600; color: #1a1a1a; margin-bottom: 20px; }
+.tabs { display: inline-flex; gap: 4px; background: white; border: 1px solid #eee; border-radius: 10px; padding: 4px; margin-bottom: 20px; }
+.tab-btn { padding: 8px 18px; border: none; background: none; border-radius: 7px; font-size: 13px; color: #888; cursor: pointer; font-weight: 500; transition: all 0.2s; }
+.tab-btn.active { background: #185FA5; color: white; }
+.card { background: white; border-radius: 12px; border: 1px solid #eee; padding: 1.5rem; margin-bottom: 16px; }
+.card-title { font-size: 14px; font-weight: 600; color: #1a1a1a; margin-bottom: 4px; }
+.card-sub { font-size: 12px; color: #888; margin-bottom: 16px; }
+.user-row { display: flex; align-items: center; gap: 12px; padding: 12px 0; border-bottom: 1px solid #f4f4f0; }
+.user-row:last-child { border-bottom: none; }
+.user-name { font-size: 14px; font-weight: 500; color: #1a1a1a; }
+.user-uname { font-size: 12px; color: #888; margin-top: 2px; }
+.page-chip { display: inline-block; padding: 3px 10px; background: #EBF3FB; color: #185FA5; border-radius: 20px; font-size: 11px; margin: 2px; }
+.sync-btn { padding: 8px 16px; background: #1D9E75; color: white; border: none; border-radius: 8px; font-size: 13px; cursor: pointer; margin-bottom: 12px; }
+.sync-btn:hover { background: #0F6E56; }
+.sync-info { font-size: 12px; color: #888; margin-bottom: 16px; background: #f9f9f7; padding: 10px 14px; border-radius: 8px; line-height: 1.6; }
+.sync-info a { color: #185FA5; text-decoration: none; }
+.sync-info a:hover { text-decoration: underline; }
+.form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 16px; }
+.form-grid input, .form-grid select { width: 100%; padding: 9px 12px; border: 1.5px solid #e0e0e0; border-radius: 8px; font-size: 13px; outline: none; }
+.form-grid input:focus, .form-grid select:focus { border-color: #185FA5; }
+.pages-title { font-size: 13px; font-weight: 500; color: #333; margin-bottom: 10px; }
+.pages-checks { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 16px; }
+.chk-label { display: flex; align-items: center; gap: 7px; padding: 8px 14px; border: 1.5px solid #e0e0e0; border-radius: 8px; font-size: 13px; cursor: pointer; transition: all 0.2s; }
+.chk-label.checked { background: #EBF3FB; border-color: #185FA5; color: #185FA5; }
+.btn-add { padding: 10px 24px; background: #185FA5; color: white; border: none; border-radius: 8px; font-size: 13px; font-weight: 500; cursor: pointer; }
+.btn-del { padding: 6px 12px; border: 1.5px solid #ffcdd2; border-radius: 8px; color: #d63031; font-size: 12px; cursor: pointer; background: none; }
+.btn-del:hover { background: #fff5f5; }
+.form-err { color: #d63031; font-size: 12px; margin-bottom: 10px; display: none; }
+</style>
+</head>
+<body>
+
+<!-- LOGIN -->
+<div id="screen-login">
+  <div class="login-box">
+    <div class="logo">📊</div>
+    <p class="login-title">Disagrup Analytics</p>
+    <p class="login-sub">Ingresa tus credenciales para continuar</p>
+    <div class="field">
+      <label>Usuario</label>
+      <input id="inp-user" type="text" placeholder="Tu usuario" autocomplete="username">
+    </div>
+    <div class="field">
+      <label>Contraseña</label>
+      <input id="inp-pass" type="password" placeholder="Tu contraseña" autocomplete="current-password">
+    </div>
+    <p class="loading-msg" id="load-msg">⏳ Verificando credenciales...</p>
+    <p class="error-msg" id="login-err">❌ Usuario o contraseña incorrectos</p>
+    <button class="btn-primary" id="btn-login" onclick="doLogin()">Ingresar</button>
+    <p class="login-footer">Acceso restringido — Disagrup S.A.S. © 2025</p>
+  </div>
+</div>
+
+<!-- PBI VIEWER -->
+<div id="screen-pbi">
+  <div class="topbar">
+    <div class="topbar-brand">📊 Disagrup Analytics</div>
+    <div>
+      <span class="topbar-user" id="pbi-nombre">-</span>
+      <span class="topbar-badge" id="pbi-badge">-</span>
+    </div>
+    <button class="btn-logout" onclick="doLogout()">Cerrar sesión</button>
+  </div>
+  <div class="page-tabs" id="page-tabs"></div>
+  <div id="pbi-container" style="flex:1"></div>
+</div>
+
+<!-- ADMIN -->
+<div id="screen-admin">
+  <div class="topbar">
+    <div class="topbar-brand">📊 Disagrup Analytics</div>
+    <div>
+      <span class="topbar-user">Administrador</span>
+      <span class="topbar-badge badge-adm">Admin</span>
+    </div>
+    <button class="btn-logout" onclick="doLogout()">Cerrar sesión</button>
+  </div>
+  <div class="admin-content">
+    <p class="admin-title">Panel de administrador</p>
+    <div class="tabs">
+      <button class="tab-btn active" onclick="switchTab('usuarios',this)">👥 Usuarios</button>
+      <button class="tab-btn" onclick="switchTab('agregar',this)">➕ Agregar</button>
+    </div>
+
+    <div id="panel-usuarios">
+      <div class="card">
+        <p class="card-title">Usuarios del Google Sheet</p>
+        <div class="sync-info">
+          📋 Los usuarios se leen desde tu Google Sheet. Para agregar, editar o cambiar contraseñas ve a:
+          <br><a href="https://docs.google.com/spreadsheets/d/e/2PACX-1vQd32CRCdJw05naxlGlg9VpD4KZNimHmpapl9kqQ-oTH7Iu4tA-AaShaooUzp0Yit4yQrbG1eFyV1pY/pub?output=csv" target="_blank">📎 Abrir Google Sheet</a>
+          — columnas necesarias: <strong>usuario | contrasena | nombre | cargo | paginas | activo</strong>
+        </div>
+        <button class="sync-btn" onclick="syncUsers()">🔄 Sincronizar usuarios</button>
+        <div id="user-list"><p style="color:#aaa;font-size:13px">Cargando usuarios...</p></div>
+      </div>
+    </div>
+
+    <div id="panel-agregar" style="display:none">
+      <div class="card">
+        <p class="card-title">Agregar usuario local</p>
+        <p class="card-sub">Estos usuarios se guardan en este navegador. Para que funcionen en todos los computadores, agrégalos directamente en el Google Sheet.</p>
+        <div class="form-grid">
+          <div>
+            <label style="font-size:12px;font-weight:500;color:#555;display:block;margin-bottom:5px">Nombre completo</label>
+            <input id="new-nombre" type="text" placeholder="ej: Ana García">
+          </div>
+          <div>
+            <label style="font-size:12px;font-weight:500;color:#555;display:block;margin-bottom:5px">Usuario</label>
+            <input id="new-user" type="text" placeholder="ej: anagarcia">
+          </div>
+          <div>
+            <label style="font-size:12px;font-weight:500;color:#555;display:block;margin-bottom:5px">Contraseña</label>
+            <input id="new-pass" type="password" placeholder="Contraseña">
+          </div>
+          <div>
+            <label style="font-size:12px;font-weight:500;color:#555;display:block;margin-bottom:5px">Cargo</label>
+            <select id="new-cargo">
+              <option>Marketing</option>
+              <option>Logística</option>
+              <option>Ventas</option>
+              <option>Gerencia</option>
+              <option>Otro</option>
+            </select>
+          </div>
+        </div>
+        <p class="pages-title">Páginas permitidas</p>
+        <div class="pages-checks">
+          <label class="chk-label" onclick="toggleChk(this)"><input type="checkbox" value="INVENTARIO"> INVENTARIO</label>
+          <label class="chk-label" onclick="toggleChk(this)"><input type="checkbox" value="ANALISIS VENTAS 2" checked> ANALISIS VENTAS 2</label>
+          <label class="chk-label checked" onclick="toggleChk(this)"><input type="checkbox" value="ANALISIS SOBRESTOCK"> ANALISIS SOBRESTOCK</label>
+        </div>
+        <p class="form-err" id="add-err">⚠️ Completa todos los campos y selecciona al menos una página</p>
+        <button class="btn-add" onclick="addLocalUser()">Agregar usuario local</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+// ===================== CONFIGURACIÓN =====================
+// Links reales de tu reporte de Power BI Service
+var PAGES = {
+  "INVENTARIO":          "https://app.powerbi.com/groups/me/reports/c9144773-aad6-46d8-8962-d8254b397a19/bd259f82117416ba7c82?experience=power-bi",
+  "ANALISIS VENTAS 2":   "https://app.powerbi.com/groups/me/reports/c9144773-aad6-46d8-8962-d8254b397a19/37dc7e5f74c4e0100b20?experience=power-bi",
+  "ANALISIS SOBRESTOCK": "https://app.powerbi.com/groups/me/reports/c9144773-aad6-46d8-8962-d8254b397a19/2ea691cd79bc22fbf42f?experience=power-bi"
+};
+
+// URL del Google Sheet publicado como CSV
+var SHEET_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vQd32CRCdJw05naxlGlg9VpD4KZNimHmpapl9kqQ-oTH7Iu4tA-AaShaooUzp0Yit4yQrbG1eFyV1pY/pub?output=csv";
+
+// Usuario admin fijo (no depende del Sheet)
+var ADMIN_USER = { usuario: "admin", pass: "admin123", nombre: "Administrador", cargo: "Admin", esAdmin: true };
+// =========================================================
+
+var sheetUsers = [];
+var localUsers = [];
+var currentUser = null;
+
+// Cargar usuarios locales guardados
+try {
+  var saved = localStorage.getItem('disagrup_local_users');
+  if (saved) localUsers = JSON.parse(saved);
+} catch(e) {}
+
+function saveLocalUsers() {
+  try { localStorage.setItem('disagrup_local_users', JSON.stringify(localUsers)); } catch(e) {}
+}
+
+function show(id) {
+  document.getElementById('screen-login').style.display = 'none';
+  document.getElementById('screen-pbi').style.display = 'none';
+  document.getElementById('screen-admin').style.display = 'none';
+  document.getElementById(id).style.display = id === 'screen-login' ? 'flex' : 'flex';
+  document.getElementById(id).style.flexDirection = id === 'screen-login' ? '' : 'column';
+}
+
+// Leer Google Sheet y parsear CSV
+function fetchSheetUsers(callback) {
+  fetch(SHEET_URL)
+    .then(function(r) { return r.text(); })
+    .then(function(csv) {
+      var lines = csv.split('\n').filter(function(l) { return l.trim(); });
+      var headers = lines[0].split(',').map(function(h) { return h.trim().toLowerCase().replace(/\r/g,''); });
+      var users = [];
+      for (var i = 1; i < lines.length; i++) {
+        var cols = lines[i].split(',').map(function(c) { return c.trim().replace(/\r/g,''); });
+        if (!cols[0]) continue;
+        var row = {};
+        headers.forEach(function(h, idx) { row[h] = cols[idx] || ''; });
+        // Solo cargar usuarios activos
+        if ((row['activo'] || '').toUpperCase() === 'SI') {
+          users.push({
+            usuario:  row['usuario'],
+            pass:     row['contrasena'],
+            nombre:   row['nombre'],
+            cargo:    row['cargo'],
+            paginas:  (row['paginas'] || '').split('|').map(function(p) { return p.trim(); }).filter(Boolean),
+            esAdmin:  false,
+            origen:   'sheet'
+          });
+        }
+      }
+      sheetUsers = users;
+      if (callback) callback(null, users);
+    })
+    .catch(function(err) {
+      if (callback) callback(err);
+    });
+}
+
+function allUsers() {
+  return [ADMIN_USER].concat(sheetUsers).concat(localUsers);
+}
+
+function doLogin() {
+  var u = document.getElementById('inp-user').value.trim();
+  var p = document.getElementById('inp-pass').value;
+  var err = document.getElementById('login-err');
+  var load = document.getElementById('load-msg');
+  var btn = document.getElementById('btn-login');
+
+  err.style.display = 'none';
+  load.style.display = 'block';
+  btn.disabled = true;
+
+  // Verificar admin primero (sin red)
+  if (u === ADMIN_USER.usuario && p === ADMIN_USER.pass) {
+    load.style.display = 'none';
+    btn.disabled = false;
+    currentUser = ADMIN_USER;
+    show('screen-admin');
+    syncUsers();
+    return;
+  }
+
+  // Verificar usuarios locales (sin red)
+  var localFound = localUsers.find(function(x) { return x.usuario === u && x.pass === p; });
+  if (localFound) {
+    load.style.display = 'none';
+    btn.disabled = false;
+    enterPBI(localFound);
+    return;
+  }
+
+  // Buscar en el Google Sheet
+  fetchSheetUsers(function(err2, users) {
+    load.style.display = 'none';
+    btn.disabled = false;
+    if (err2) {
+      // Si falla la red, verificar en sheet cacheado
+      var cached = sheetUsers.find(function(x) { return x.usuario === u && x.pass === p; });
+      if (cached) { enterPBI(cached); return; }
+      document.getElementById('login-err').textContent = '⚠️ Error de conexión. Verifica tu internet.';
+      document.getElementById('login-err').style.display = 'block';
+      return;
+    }
+    var found = users.find(function(x) { return x.usuario === u && x.pass === p; });
+    if (!found) {
+      document.getElementById('login-err').textContent = '❌ Usuario o contraseña incorrectos';
+      document.getElementById('login-err').style.display = 'block';
+      return;
+    }
+    enterPBI(found);
+  });
+}
+
+function enterPBI(user) {
+  currentUser = user;
+  show('screen-pbi');
+  var badge = document.getElementById('pbi-badge');
+  badge.textContent = user.cargo;
+  badge.className = 'topbar-badge ' + (user.cargo === 'Marketing' ? 'badge-mkt' : user.cargo === 'Logística' ? 'badge-log' : 'badge-adm');
+  document.getElementById('pbi-nombre').textContent = user.nombre;
+  renderTabs(user.paginas);
+}
+
+function renderTabs(paginas) {
+  var tabs = document.getElementById('page-tabs');
+  tabs.innerHTML = paginas.map(function(p, i) {
+    return '<div class="page-tab' + (i === 0 ? ' active' : '') + '" onclick="selectPage(\'' + p.replace(/'/g,"\\'") + '\',this)">' + p + '</div>';
+  }).join('');
+  if (paginas.length > 0) selectPage(paginas[0], tabs.firstChild);
+}
+
+function selectPage(name, el) {
+  document.querySelectorAll('.page-tab').forEach(function(t) { t.classList.remove('active'); });
+  if (el) el.classList.add('active');
+  var url = PAGES[name];
+  var c = document.getElementById('pbi-container');
+  if (url) {
+    c.innerHTML = '<iframe class="pbi-frame" src="' + url + '" allowfullscreen></iframe>';
+  } else {
+    c.innerHTML = '<div class="no-url"><span style="font-size:40px">📄</span><p style="font-size:15px;color:#555">' + name + '</p><small>URL no configurada</small></div>';
+  }
+}
+
+function doLogout() {
+  currentUser = null;
+  document.getElementById('inp-user').value = '';
+  document.getElementById('inp-pass').value = '';
+  document.getElementById('login-err').style.display = 'none';
+  show('screen-login');
+}
+
+function syncUsers() {
+  var list = document.getElementById('user-list');
+  list.innerHTML = '<p style="color:#888;font-size:13px">🔄 Cargando desde Google Sheet...</p>';
+  fetchSheetUsers(function(err) {
+    if (err) {
+      list.innerHTML = '<p style="color:#d63031;font-size:13px">❌ Error al cargar el Sheet. Verifica tu conexión a internet.</p>';
+      return;
+    }
+    renderUserList();
+  });
+}
+
+function renderUserList() {
+  var list = document.getElementById('user-list');
+  var all = sheetUsers.concat(localUsers);
+  if (all.length === 0) {
+    list.innerHTML = '<p style="color:#aaa;font-size:13px;padding:12px 0">No hay usuarios registrados. Agrégalos en el Google Sheet.</p>';
+    return;
+  }
+  list.innerHTML = all.map(function(u, i) {
+    var isLocal = u.origen !== 'sheet';
+    var badgeCls = u.cargo === 'Marketing' ? 'badge-mkt' : u.cargo === 'Logística' ? 'badge-log' : 'badge-adm';
+    return '<div class="user-row">' +
+      '<div style="flex:1">' +
+        '<div class="user-name">' + u.nombre + ' <span class="topbar-badge ' + badgeCls + '">' + u.cargo + '</span>' + (isLocal ? ' <span style="font-size:10px;color:#888">(local)</span>' : '') + '</div>' +
+        '<div class="user-uname">@' + u.usuario + '</div>' +
+      '</div>' +
+      '<div style="flex:1.5">' + (u.paginas||[]).map(function(p) { return '<span class="page-chip">' + p + '</span>'; }).join('') + '</div>' +
+      (isLocal ? '<button class="btn-del" onclick="delLocalUser(' + i + ')">🗑</button>' : '<span style="font-size:11px;color:#aaa">Google Sheet</span>') +
+    '</div>';
+  }).join('');
+}
+
+function delLocalUser(idx) {
+  var sheetCount = sheetUsers.length;
+  var localIdx = idx - sheetCount;
+  if (localIdx >= 0 && confirm('¿Eliminar este usuario local?')) {
+    localUsers.splice(localIdx, 1);
+    saveLocalUsers();
+    renderUserList();
+  }
+}
+
+function addLocalUser() {
+  var nombre = document.getElementById('new-nombre').value.trim();
+  var usuario = document.getElementById('new-user').value.trim();
+  var pass = document.getElementById('new-pass').value;
+  var cargo = document.getElementById('new-cargo').value;
+  var paginas = [...document.querySelectorAll('.pages-checks input:checked')].map(function(x) { return x.value; });
+  var err = document.getElementById('add-err');
+  if (!nombre || !usuario || !pass || paginas.length === 0) { err.style.display='block'; return; }
+  err.style.display = 'none';
+  localUsers.push({ usuario, pass, nombre, cargo, paginas, esAdmin: false, origen: 'local' });
+  saveLocalUsers();
+  document.getElementById('new-nombre').value = '';
+  document.getElementById('new-user').value = '';
+  document.getElementById('new-pass').value = '';
+  switchTab('usuarios', document.querySelector('.tab-btn'));
+  renderUserList();
+  alert('✅ Usuario local "' + nombre + '" agregado. Para que funcione en todos los computadores, agrégalo en el Google Sheet.');
+}
+
+function toggleChk(lbl) {
+  setTimeout(function() {
+    lbl.classList.toggle('checked', lbl.querySelector('input').checked);
+  }, 0);
+}
+
+function switchTab(tab, el) {
+  document.querySelectorAll('.tab-btn').forEach(function(b) { b.classList.remove('active'); });
+  if (el) el.classList.add('active');
+  document.getElementById('panel-usuarios').style.display = tab === 'usuarios' ? 'block' : 'none';
+  document.getElementById('panel-agregar').style.display = tab === 'agregar' ? 'block' : 'none';
+}
+
+document.getElementById('inp-pass').addEventListener('keydown', function(e) { if (e.key==='Enter') doLogin(); });
+document.getElementById('inp-user').addEventListener('keydown', function(e) { if (e.key==='Enter') doLogin(); });
+
+// Inicializar checkbox visual
+document.querySelectorAll('.chk-label input:checked').forEach(function(cb) {
+  cb.parentElement.classList.add('checked');
+});
+</script>
+</body>
+</html>
