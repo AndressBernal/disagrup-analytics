@@ -78,8 +78,8 @@ body {
 
 .logo-icon img {
   /* Si usas una imagen como logo */
-  width: 44px;
-  height: 44px;
+  width: 90px;
+  height: 90px;
   object-fit: contain;
 }
 
